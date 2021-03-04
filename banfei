@@ -1,0 +1,506 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>           //使用到字符数组时需要使用
+#include<conio.h>            //定义了通过控制台进行数据输入和数据输出的函数，主要是一些用户通过按键盘产生的对应操作
+#include<windows.h>          //windows图形界面相关
+FILE *fp2;              //指向 "数据库" 的指针
+
+struct note             //定义一条记录
+
+{
+
+	char time[9];      //记录创建时间
+
+	char xiangmu[20];  //记录项目
+
+	char money[16];     //收支情况
+
+	char name[25];      //经办人姓名
+
+};
+//主要功能函数声明
+
+
+int Menu();         //.主菜单
+
+int income();       //.添加班费收信息
+
+int expend();       //.添加班费支出信息
+
+int Output();       //.浏览所有班费收支信息
+
+int Clean();        //.清空数据库
+
+int Outlook();
+
+
+//主函数
+
+int main()
+
+{
+while(1)
+
+		{
+
+			system("cls"); //用于清屏
+
+			Menu();
+
+		}
+
+
+
+	return 0;
+
+}
+//主要功能函数
+//2.主菜单
+
+int Menu()
+
+{
+	char choose;
+
+	fflush(stdin);
+
+	
+
+	Outlook();       //调用Outlook函数显示菜单项
+
+	scanf("%c",&choose);
+
+	getchar();
+
+	switch(choose)   //判断要执行的操作
+
+	{
+
+	case '1': income(); break;
+	case '2': expend(); break;
+	case '3': Output(); break;
+	case '5': Clean();  break;
+	case '4': exit(0);  break;
+	default:
+
+		{
+
+			Outlook();
+
+			break;
+
+		}
+
+	}
+
+	return 0;
+
+}
+
+
+
+
+
+
+
+
+
+int Outlook()               //显示菜单项
+
+{
+printf("                   班费管理系统\n                          ");
+    printf("--------------------------------------------------\n");
+    printf("   1,新增收入 2，新增支出 3，班费明细 4，退出系统  5,清除数据  \n    ");
+    printf("--------------------------------------------------\n");
+    printf("请选择（1-5）:\n");
+
+	return 0;
+
+}
+
+
+
+
+
+//4.添加班费收支信息
+
+int income()
+
+{
+
+	
+	struct note one;
+
+	system("cls");
+
+	fflush(stdin);
+
+
+
+	//判断该数据库是否存在
+
+    if((fp2=fopen("班费收支管理系统.txt","rb+"))==NULL)
+
+    {
+
+        fp2=fopen("班费收支管理系统.txt","wb+");
+
+    }
+
+    fclose(fp2);
+
+
+
+
+
+
+	//如果数据库里有记录则以追加方式打开
+
+	printf("                          班费收支管理系统\n\n");
+
+	printf("------------------------------添加新记录界面-----------------------------------\n\n");
+
+	printf("\t添加新记录：\n");
+
+	if((fp2=fopen("班费收支管理系统.txt","ab+"))==NULL)
+
+	{
+
+		printf("\n\t对不起，不能打开该数据库！");
+
+		return 0;
+
+	}
+
+
+
+	 //按格式添加数据
+
+	printf("\n\t\t请按此格式输入当前日期(20180303)：");
+
+	scanf("%s",one.time);
+
+	getchar();
+
+	while(strlen(one.time)!=8)
+
+	{
+
+	    printf("\t\t格式输入有误，请重新输入日期(20180303):");
+
+	    scanf("%s",one.time);
+
+        getchar();
+
+	}
+
+	printf("\n\t\t请输入记录项目(不多于20个字符)：");
+
+	scanf("%s",one.xiangmu);
+
+	getchar();
+
+	printf("\n\t\t请输入收支情况（正数表示收入，负号表示支出）：");
+
+	scanf("%s",one.money);
+
+	getchar();
+
+	printf("\n\t\t请输入经办人姓名(不多于25个字符)：");
+
+	scanf("%s",one.name);
+
+	getchar();
+
+	fprintf(fp2,"%10s%25s%20s%30s",one.time,one.xiangmu,one.money,one.name);
+
+	fclose(fp2);
+
+	printf("\n\t操作成功，请按任意键继续...");
+
+	//getch();
+
+	return 0;
+
+}
+
+int expend()
+
+{
+	struct note one;
+
+	system("cls");
+
+	fflush(stdin);
+
+
+
+	//判断该数据库是否存在
+
+    if((fp2=fopen("班费收支管理系统.txt","rb+"))==NULL)
+
+    {
+
+        fp2=fopen("班费收支管理系统.txt","wb+");
+
+    }
+
+    fclose(fp2);
+
+
+
+
+
+
+
+	//如果数据库里有记录则以追加方式打开
+
+	printf("                          班费收支管理系统\n\n");
+
+	printf("------------------------------添加新记录界面-----------------------------------\n\n");
+
+	printf("\t添加新记录：\n");
+
+	if((fp2=fopen("班费收支管理系统.txt","ab+"))==NULL)
+
+	{
+
+		printf("\n\t对不起，不能打开该数据库！");
+
+		return 0;
+
+	}
+
+
+
+	 //按格式添加数据
+
+	printf("\n\t\t请按此格式输入当前日期(20180303)：");
+
+	scanf("%s",one.time);
+
+	getchar();
+
+	while(strlen(one.time)!=8)
+
+	{
+
+	    printf("\t\t格式输入有误，请重新输入日期(20180303):");
+
+	    scanf("%s",one.time);
+
+        getchar();
+
+	}
+
+	printf("\n\t\t请输入记录项目(不多于20个字符)：");
+
+	scanf("%s",one.xiangmu);
+
+	getchar();
+
+	printf("\n\t\t请输入收支情况（正数表示收入，负号表示支出）：");
+
+	scanf("%s",one.money);
+
+	getchar();
+
+	printf("\n\t\t请输入经办人姓名(不多于25个字符)：");
+
+	scanf("%s",one.name);
+
+	getchar();
+
+	fprintf(fp2,"%10s%25s%20s%30s",one.time,one.xiangmu,one.money,one.name);
+
+	fclose(fp2);
+
+	printf("\n\t操作成功，请按任意键继续...");
+
+	//getch();
+
+	return 0;
+
+}
+
+
+
+//5.浏览所有班费收支信息
+
+int Output()
+
+{
+	
+    double sum=0;            //统计总的收支情况
+
+    double sum1=0;           //统计总的收入情况
+
+    double sum2=0;           //统计总的支出情况
+
+    double number;           //将字符串临时转化为整形数据
+
+	struct note one;
+
+    system("cls");
+
+	fflush(stdin);
+
+
+
+	//判断该数据库是否存在
+
+    if((fp2=fopen("班费收支管理系统.txt","rb+"))==NULL)
+
+    {
+
+		printf("                          班费收支管理系统\n\n");
+
+		printf("-------------------------------错误提示----------------------------------------\n\n");
+
+        printf("\t您尚未录入任何记录，按任意键返回重新选择.");
+
+        getch();
+
+        return 0;
+
+    }
+
+
+
+
+	if((fp2=fopen("班费收支管理系统.txt","rb+"))==NULL)
+
+	{
+
+		printf("\t对不起，不能打开该数据库！请按任意键继续...");
+
+		getch();
+
+		return 0;
+
+	}
+
+	printf("                          班费收支管理系统\n\n");
+
+	printf("------------------------------财务记录总账显示------------------------------\n\n");
+
+	printf("  时间                  项目            收支                  经办人\n");
+
+	while(!feof(fp2))//循环输出记录
+
+	{
+
+	    fscanf(fp2,"%10s%25s%20s%30s",one.time,one.xiangmu,one.money,one.name);
+
+
+
+        printf("%10s%20s%16s%23s\n\n",one.time,one.xiangmu,one.money,one.name);
+
+        number=atof(one.money);
+
+        if(number>0)
+
+        {
+
+            sum1+=number;
+
+        }
+
+        else
+
+        {
+
+            sum2+=number;
+
+        }
+
+
+
+	}
+
+	//班费统计
+
+	sum=sum1+sum2;
+
+	printf("\n\t班费总收入为：%.2lf元",sum1);
+
+	printf("\n\t班费总支出为：%.2lf元",sum2);
+
+	printf("\n\t班费余额为：%.2lf元",sum);
+
+	printf("\n\n\t操作成功，请按任意键继续...");
+
+    getch();
+
+	fclose(fp2);
+
+	return 0;
+
+}
+
+//10.清空数据库函数
+
+int Clean()
+
+{
+	char choose;     //判断是否删除
+
+	system("cls");
+
+	fflush(stdin);
+
+
+
+	printf("                          班费收支管理系统\n\n");
+
+	printf("-------------------------------清空数据库界面----------------------------------\n\n");
+
+	printf("\t清空数据库:\n\n");
+
+	printf("\t\t数据库清空后将无法恢复，您确定么？<Y/任意字符返回>");
+
+	scanf("%c",&choose);
+
+	if((fp2=fopen("班费收支管理系统.txt","rb+"))==NULL)
+
+	{
+
+	    printf("\n\t您未记录任何数据，按任意键返回...");
+
+	    getch();
+
+	    return 0;
+
+	}
+
+	fclose(fp2);
+
+	if(choose=='Y')
+
+	{
+
+		if(remove("班费收支管理系统.txt"))
+
+		{
+
+			printf("\n\t操作失败，按任意键继续...");
+
+			getch();
+
+		}
+
+		else
+
+		{
+
+			printf("\n\t操作成功，按任意键继续...");
+
+			getch();
+
+		}
+
+	}
+
+	return 0;
+
+}
